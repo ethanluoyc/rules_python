@@ -1,0 +1,25 @@
+workspace(name = "pybind11_example")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+local_repository(
+    name = "rules_python",
+    path = "../..",
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
+
+py_repositories()
+
+python_register_toolchains(
+    name = "python39",
+    python_version = "3.9",
+)
+
+http_archive(
+    name = "pybind11",
+    build_file = "//:pybind11.BUILD",
+    strip_prefix = "pybind11-2.10.4",
+    sha256 = "832e2f309c57da9c1e6d4542dedd34b24e4192ecb4d62f6f4866a737454c9970",
+    urls = ["https://github.com/pybind/pybind11/archive/v2.10.4.tar.gz"],
+)
